@@ -1,6 +1,7 @@
 ---
 name: implement-ui-case-simulator
-description: Implement reusable frontend UI-case simulation systems and selectable scenarios without modifying a legacy or shared backend. Use when asked to reproduce hard-to-reach empty, loading, error, permission, status, edge-data, race-condition, or multi-step UI states; add a developer/QA mock-state panel; choose and configure MSW, Next.js Route Handlers, framework server endpoints, or client-state overrides; or make named screen cases reproducible in React, Next.js, Vue, Svelte, or similar frontend projects.
+description: Implement reusable frontend UI-case simulation systems and selectable scenarios without modifying a legacy or shared backend. Use when asked to reproduce hard-to-reach empty, loading, error, permission, status, edge-data, race-condition, or multi-step UI states; add an intuitive tooltip-triggered, non-modal developer/QA simulator; choose and configure MSW, Next.js Route Handlers, framework server endpoints, or client-state overrides; or make named screen cases reproducible in React, Next.js, Vue, Svelte, or similar frontend projects.
+license: MIT
 ---
 
 # Implement UI Case Simulator
@@ -16,7 +17,7 @@ Trace the target screen from UI to data source:
 3. Search for existing mock controls, Storybook stories, development menus, MSW setup, server endpoints, cookies, query flags, and environment guards.
 4. Reuse an established simulation mechanism when it can drive the case reliably. Extend it instead of creating a second control surface.
 
-Read [references/architecture.md](references/architecture.md) when creating or extending the control surface. Read [references/adapters.md](references/adapters.md) after identifying the request path. Read [references/verification.md](references/verification.md) before finishing.
+Read [references/architecture.md](references/architecture.md) when creating or extending the control surface. Read [references/control-panel-ui.md](references/control-panel-ui.md) before implementing or reviewing its UI. Read [references/adapters.md](references/adapters.md) after identifying the request path. Read [references/verification.md](references/verification.md) before finishing.
 
 This skill follows the vendor-neutral Agent Skills format. When asked to install, distribute, or adapt it for an AI coding agent, read [references/platform-support.md](references/platform-support.md) and preserve `SKILL.md` as the canonical instruction source.
 
@@ -50,7 +51,7 @@ Parse active keys as exact tokens. Never use substring matching for comma-separa
 Perform every applicable step:
 
 1. Add or extend the scenario registry and its types.
-2. Add the developer/QA control panel if the project has none. Keep it globally mounted, route-aware, accessible, keyboard-safe, and hidden outside explicitly allowed environments.
+2. Add the developer/QA control panel if the project has none. Implement it as a tooltip-labeled trigger opening an anchored non-modal popover, never a modal, drawer, or page-blocking overlay. Keep it globally mounted, route-aware, accessible, keyboard-safe, and hidden outside explicitly allowed environments. Follow [references/control-panel-ui.md](references/control-panel-ui.md).
 3. Persist the active selection using the least invasive existing mechanism. Prefer a same-origin cookie when server handlers must read it; otherwise use URL state or local storage.
 4. Implement the response or client-state adapter while preserving the normal path when inactive.
 5. Keep substantial payloads in typed fixtures/builders near the adapter, not as large inline objects.

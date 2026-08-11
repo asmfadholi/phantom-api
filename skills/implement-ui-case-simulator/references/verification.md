@@ -26,6 +26,11 @@ When the application can run locally:
 5. Clear all scenarios and confirm the normal UI returns.
 6. Check console and network panels for unexpected failures.
 7. Confirm keyboard access and focus behavior for the panel.
+8. Confirm the trigger tooltip contains no controls and the interactive popover is non-modal.
+9. Confirm click, Enter, and Space open the popover; Escape and outside click close it; focus returns predictably.
+10. Test at 320px and 375px widths, at 200% zoom, in both themes, and with reduced motion enabled.
+11. Confirm every interactive target is at least 44 by 44 CSS pixels and active state is not conveyed by color alone.
+12. Confirm the popover flips or shifts near viewport edges without horizontal overflow or hiding its actions.
 
 ## Completion report
 

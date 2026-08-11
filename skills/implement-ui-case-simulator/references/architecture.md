@@ -55,7 +55,8 @@ Create shared `parseStates`, `hasState`, `serializeStates`, and `clearStates` he
 
 Provide:
 
-- a compact floating or development-menu entry;
+- a compact floating or development-menu trigger with a short text tooltip;
+- an anchored, collision-aware, non-modal popover for all interactive controls;
 - active-state count and summary;
 - pending selection separated from applied selection when application reload is required;
 - Apply and Clear actions;
@@ -64,7 +65,9 @@ Provide:
 - route-aware filtering;
 - accessible labels, focus management, and sufficient contrast.
 
-Avoid occupying production layout space. Lazy-load the panel in allowed environments when supported.
+Never place controls inside an element with `role="tooltip"`. A semantic tooltip is non-interactive and only labels the trigger. Prefer the project's existing popover primitive or the native HTML Popover API for the control surface. Do not add a backdrop, mark the rest of the app inert, trap focus, or use `aria-modal="true"`.
+
+Avoid occupying production layout space. Lazy-load the panel in allowed environments when supported. Follow [control-panel-ui.md](control-panel-ui.md) for layout, interaction, accessibility, motion, and responsive requirements.
 
 ## Production gate
 
