@@ -47,7 +47,7 @@ The skill inspects the target repository and selects the narrowest reliable adap
 Clone the repository, then run the cross-platform installer:
 
 ```bash
-git clone --branch phantom-api https://github.com/asmfadholi/phantom-api.git
+git clone https://github.com/asmfadholi/phantom-api.git
 cd phantom-api
 python3 scripts/install.py --platform all --scope user
 ```
@@ -107,7 +107,7 @@ For Cline, enable the experimental Skills feature in **Settings → Features →
 Ask Codex:
 
 ```text
-$skill-installer install the skill from https://github.com/asmfadholi/phantom-api/tree/phantom-api
+$skill-installer install the skill from https://github.com/asmfadholi/phantom-api/tree/main
 ```
 
 ### With GitHub CLI for Copilot and other supported hosts
