@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Case Simulator"
+  short_description: "Implement reproducible frontend UI cases"
+  default_prompt: "Use $implement-ui-case-simulator to implement a reproducible UI scenario in this frontend project."
