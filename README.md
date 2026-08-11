@@ -1,8 +1,23 @@
 # Phantom API
 
-An open-source Codex skill for building reproducible frontend UI scenarios without repeatedly changing a legacy or shared backend.
+An open-source Agent Skill for building reproducible frontend UI scenarios without repeatedly changing a legacy or shared backend.
 
-Phantom API teaches Codex to inspect a frontend's real request flow, choose the correct simulation layer, and implement the case end to end. It can extend an existing mock system or create a route-aware developer/QA control panel when the project has none.
+Phantom API teaches AI coding agents to inspect a frontend's real request flow, choose the correct simulation layer, and implement the case end to end. It can extend an existing mock system or create a route-aware developer/QA control panel when the project has none.
+
+## Supported AI agents
+
+Phantom API uses the portable `SKILL.md` Agent Skills format and supports:
+
+- OpenAI Codex
+- Claude Code and Claude Agent SDK
+- GitHub Copilot coding agent, CLI, and supported IDE agent modes
+- Cursor editor and CLI
+- Gemini CLI
+- Windsurf Cascade
+- Cline
+- Other agents that implement the Agent Skills open standard through `--custom-path`
+
+One canonical skill is shared across hosts; no platform-specific workflow copies need to be maintained.
 
 ## What it handles
 
@@ -24,7 +39,65 @@ The skill inspects the target repository and selects the narrowest reliable adap
 | Client-state adapter                              | The UI condition is not owned by an API response, such as a modal, wizard step, timer, or browser API             |
 | Storybook args                                    | Isolated component visualization; not the sole application-level reproduction path                                |
 
-## Install
+## Install on every supported agent
+
+Clone the repository, then run the cross-platform installer:
+
+```bash
+git clone --branch phantom-api https://github.com/asmfadholi/phantom-api.git
+cd phantom-api
+python3 scripts/install.py --platform all --scope user
+```
+
+The default mode creates links into each agent's native personal skills directory. The installer never overwrites an existing destination.
+
+Install only selected agents:
+
+```bash
+python3 scripts/install.py \
+  --platform codex claude copilot cursor gemini windsurf cline \
+  --scope user
+```
+
+Use copies instead of symlinks when necessary:
+
+```bash
+python3 scripts/install.py --platform all --scope user --mode copy
+```
+
+Install for another Agent Skills-compatible host by providing its skills directory:
+
+```bash
+python3 scripts/install.py \
+  --platform codex \
+  --scope user \
+  --custom-path .your-agent/skills
+```
+
+Install into a specific project instead of globally:
+
+```bash
+python3 scripts/install.py \
+  --platform all \
+  --scope project \
+  --target /path/to/project
+```
+
+### Native discovery paths
+
+| Agent          | Personal scope                | Project scope       |
+| -------------- | ----------------------------- | ------------------- |
+| Codex          | `~/.agents/skills/`           | `.agents/skills/`   |
+| Claude Code    | `~/.claude/skills/`           | `.claude/skills/`   |
+| GitHub Copilot | `~/.copilot/skills/`          | `.github/skills/`   |
+| Cursor         | `~/.cursor/skills/`           | `.cursor/skills/`   |
+| Gemini CLI     | `~/.gemini/skills/`           | `.gemini/skills/`   |
+| Windsurf       | `~/.codeium/windsurf/skills/` | `.windsurf/skills/` |
+| Cline          | `~/.cline/skills/`            | `.cline/skills/`    |
+
+For Cline, enable the experimental Skills feature in **Settings → Features → Enable Skills**.
+
+## Agent-specific installation
 
 ### With Codex skill installer
 
@@ -34,22 +107,32 @@ Ask Codex:
 $skill-installer install the skill from https://github.com/asmfadholi/phantom-api/tree/phantom-api
 ```
 
-### Manually for your user
+### With GitHub CLI for Copilot and other supported hosts
 
-Codex discovers personal skills under `$HOME/.agents/skills`:
+GitHub CLI 2.90 or later can preview and install Agent Skills:
 
 ```bash
-mkdir -p "$HOME/.agents/skills"
-git clone --branch phantom-api \
-  https://github.com/asmfadholi/phantom-api.git \
-  "$HOME/.agents/skills/implement-ui-case-simulator"
+gh skill preview asmfadholi/phantom-api implement-ui-case-simulator
+gh skill install asmfadholi/phantom-api implement-ui-case-simulator \
+  --agent copilot \
+  --scope user
 ```
 
-Restart Codex if the skill does not appear immediately. See the [official OpenAI skill documentation](https://learn.chatgpt.com/docs/build-skills) for discovery locations and invocation behavior.
+Restart the agent if the skill does not appear immediately.
+
+Official platform references:
+
+- [OpenAI Codex skills](https://learn.chatgpt.com/docs/build-skills)
+- [Claude Code skills](https://code.claude.com/docs/en/slash-commands)
+- [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+- [Cursor Agent Skills announcement](https://cursor.com/changelog/2-4)
+- [Gemini CLI Agent Skills](https://geminicli.com/docs/cli/using-agent-skills/)
+- [Windsurf Cascade Skills](https://docs.windsurf.com/windsurf/cascade/skills)
+- [Cline Skills](https://docs.cline.bot/customization/skills)
 
 ## Use
 
-Invoke it explicitly:
+Invoke it explicitly in Codex:
 
 ```text
 $implement-ui-case-simulator reproduce the empty and 500-error states on the orders page
@@ -69,7 +152,7 @@ $implement-ui-case-simulator create a preset for QA case PD-4-14 using the exist
 $implement-ui-case-simulator make the upload timeout and retry states reproducible without changing the backend
 ```
 
-Codex may also invoke the skill implicitly when a request matches its description.
+Claude Code and Cursor expose it as `/implement-ui-case-simulator`; Windsurf exposes it as `@implement-ui-case-simulator`. Copilot, Gemini CLI, Cline, and other compatible agents can activate it automatically when a request matches its description.
 
 ## What the skill implements
 
@@ -88,13 +171,18 @@ The skill does not modify the legacy backend, shared environments, authenticatio
 
 ```text
 .
-├── SKILL.md
-├── agents/
-│   └── openai.yaml
-├── references/
-│   ├── adapters.md
-│   ├── architecture.md
-│   └── verification.md
+├── skills/
+│   └── implement-ui-case-simulator/
+│       ├── SKILL.md
+│       ├── agents/
+│       │   └── openai.yaml
+│       └── references/
+│           ├── adapters.md
+│           ├── architecture.md
+│           ├── platform-support.md
+│           └── verification.md
+├── scripts/
+│   └── install.py
 └── LICENSE
 ```
 

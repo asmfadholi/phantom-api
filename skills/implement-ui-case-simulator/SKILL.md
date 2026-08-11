@@ -18,6 +18,8 @@ Trace the target screen from UI to data source:
 
 Read [references/architecture.md](references/architecture.md) when creating or extending the control surface. Read [references/adapters.md](references/adapters.md) after identifying the request path. Read [references/verification.md](references/verification.md) before finishing.
 
+This skill follows the vendor-neutral Agent Skills format. When asked to install, distribute, or adapt it for an AI coding agent, read [references/platform-support.md](references/platform-support.md) and preserve `SKILL.md` as the canonical instruction source.
+
 ## Select the interception layer
 
 Use the narrowest layer that deterministically controls the visible behavior:
