@@ -18,7 +18,7 @@ Several hosts also recognize `.agents/skills`, but use each native directory in 
 
 ## Compatibility rules
 
-- Keep only `name` and `description` in `SKILL.md` frontmatter. Vendor-specific keys can be ignored or interpreted differently by other hosts.
+- Keep `SKILL.md` frontmatter limited to portable Agent Skills fields such as `name`, `description`, and `license`. Vendor-specific keys can be ignored or interpreted differently by other hosts.
 - Keep relative links to bundled references and scripts.
 - Avoid vendor-specific tool names, inline command injection, subagent configuration, and permission fields in the canonical instructions.
 - Put optional OpenAI presentation metadata in `agents/openai.yaml`; other hosts safely ignore it.
