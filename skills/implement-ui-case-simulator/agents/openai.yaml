@@ -1,4 +1,4 @@
 interface:
   display_name: "UI Case Simulator"
   short_description: "Build reproducible UI cases without backend changes"
-  default_prompt: "Use $implement-ui-case-simulator to implement a reproducible UI scenario and its accessible tooltip-triggered, non-modal simulator in this frontend project."
+  default_prompt: "Use $implement-ui-case-simulator to implement a reproducible UI scenario and its accessible tooltip-triggered, non-modal simulator in this frontend project. Apply scenario changes live through reactive state, targeted refetch, or framework soft refresh instead of a hard page reload whenever possible."

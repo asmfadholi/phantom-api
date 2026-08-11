@@ -53,11 +53,12 @@ Perform every applicable step:
 1. Add or extend the scenario registry and its types.
 2. Add the developer/QA control panel if the project has none. Implement it as a tooltip-labeled trigger opening an anchored non-modal popover, never a modal, drawer, or page-blocking overlay. Keep it globally mounted, route-aware, accessible, keyboard-safe, and hidden outside explicitly allowed environments. Follow [references/control-panel-ui.md](references/control-panel-ui.md).
 3. Persist the active selection using the least invasive existing mechanism. Prefer a same-origin cookie when server handlers must read it; otherwise use URL state or local storage.
-4. Implement the response or client-state adapter while preserving the normal path when inactive.
-5. Keep substantial payloads in typed fixtures/builders near the adapter, not as large inline objects.
-6. Add named presets for test-case IDs or scenarios requiring multiple keys.
-7. Add focused tests for the default path, each new scenario, exact key matching, reset behavior, and production gating.
-8. Update existing developer documentation only when usage or architecture changes. Do not create unrelated documentation.
+4. Make Apply update the visible screen without a hard page reload whenever the framework permits it. Update reactive client state, invalidate/refetch the affected query, or use framework soft refresh/navigation after persistence completes. Never default to `window.location.reload()` or its equivalent. Follow the live-apply guidance in [references/adapters.md](references/adapters.md).
+5. Implement the response or client-state adapter while preserving the normal path when inactive.
+6. Keep substantial payloads in typed fixtures/builders near the adapter, not as large inline objects.
+7. Add named presets for test-case IDs or scenarios requiring multiple keys.
+8. Add focused tests for the default path, each new scenario, exact key matching, live Apply, reset behavior, and production gating.
+9. Update existing developer documentation only when usage or architecture changes. Do not create unrelated documentation.
 
 Preserve the real API contract unless malformed data is the requested case. Do not change the legacy backend, shared environments, authentication, or production proxy behavior.
 

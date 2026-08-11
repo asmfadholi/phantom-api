@@ -58,7 +58,8 @@ Provide:
 - a compact floating or development-menu trigger with a short text tooltip;
 - an anchored, collision-aware, non-modal popover for all interactive controls;
 - active-state count and summary;
-- pending selection separated from applied selection when application reload is required;
+- pending selection separated from applied selection when data revalidation or a soft refresh is required;
+- live Apply that updates affected consumers through reactive state, targeted refetch, invalidation, or framework soft refresh;
 - Apply and Clear actions;
 - checkboxes for independent states and radio controls for exclusive groups;
 - named presets for full screens;
@@ -68,6 +69,8 @@ Provide:
 Never place controls inside an element with `role="tooltip"`. A semantic tooltip is non-interactive and only labels the trigger. Prefer the project's existing popover primitive or the native HTML Popover API for the control surface. Do not add a backdrop, mark the rest of the app inert, trap focus, or use `aria-modal="true"`.
 
 Avoid occupying production layout space. Lazy-load the panel in allowed environments when supported. Follow [control-panel-ui.md](control-panel-ui.md) for layout, interaction, accessibility, motion, and responsive requirements.
+
+Do not couple Apply to a hard document reload. Expose a small adapter boundary such as `applyScenarios(nextStates)` plus an update callback so persistence and screen revalidation can vary by framework without leaking into the control UI.
 
 ## Production gate
 

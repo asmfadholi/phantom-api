@@ -29,6 +29,7 @@ One canonical skill is shared across hosts; no platform-specific workflow copies
 - Production-safe environment gating
 - Tooltip-labeled, non-modal simulator UI that stays out of the application's way
 - Accessible keyboard flow, responsive positioning, and reduced-motion support
+- Live scenario application through reactive state, targeted refetch, or framework soft refresh
 
 ## Adapter selection
 
@@ -163,10 +164,11 @@ Depending on the target repository, it will:
 1. Trace the page, data hook, API client, endpoint, types, fixtures, and tests.
 2. Reuse an existing simulation mechanism or create a typed scenario registry and control panel.
 3. Mount the simulator as an anchored non-modal popover with an intuitive tooltip-labeled trigger, never as a modal overlay.
-4. Implement the chosen server, MSW, or client-state adapter.
-5. Preserve the normal request and UI path whenever no scenario is active.
-6. Add focused tests for the default case, scenarios, exact matching, reset behavior, production gating, and control accessibility.
-7. Run the repository's relevant tests, typecheck, lint, build, and browser verification.
+4. Apply scenarios without a hard reload through reactive state, targeted query refetch/invalidation, or framework soft refresh whenever possible.
+5. Implement the chosen server, MSW, or client-state adapter.
+6. Preserve the normal request and UI path whenever no scenario is active.
+7. Add focused tests for the default case, scenarios, exact matching, live Apply, reset behavior, production gating, and control accessibility.
+8. Run the repository's relevant tests, typecheck, lint, build, and browser verification.
 
 The skill does not modify the legacy backend, shared environments, authentication, or production API contract.
 

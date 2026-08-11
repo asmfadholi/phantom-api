@@ -1,5 +1,20 @@
 # Adapter selection and recipes
 
+## Live Apply without hard reload
+
+Treat scenario activation as a normal state transition. After persistence succeeds, update only the consumers affected by the scenario:
+
+1. For client-state adapters, keep active scenarios in a reactive store or context and let subscribed components render immediately.
+2. For query libraries, invalidate or refetch the narrowest affected query keys. Preserve unrelated cache entries, scroll position, and form state.
+3. For Next.js App Router data owned by Server Components or Route Handlers, write the cookie first and then use `router.refresh()` or the project's equivalent soft refresh. Do not use `window.location.reload()`.
+4. For Pages Router or another framework router, prefer shallow navigation, data revalidation, loader revalidation, or the framework's fetcher API when it causes the relevant data path to run again.
+5. For MSW, resolve the active scenario at request time, then trigger the application's existing refetch/invalidation mechanism. Do not restart the worker for each selection.
+6. For URL-backed scenarios, update the URL through the router while preserving pathname, unrelated parameters, history intent, and scroll when supported.
+
+Apply only after cookie, storage, or URL persistence has completed so the next request observes the new scenario. Keep the popover responsive while the update runs, prevent duplicate Apply actions, and surface failures without discarding pending choices.
+
+A hard reload is a last resort. Use it only when repository evidence shows the relevant runtime is initialized once at document startup and offers no safe reactive, invalidation, or soft-refresh path. Document the reason in code and the completion report. Never hard reload merely because it is simpler.
+
 ## Framework server endpoint
 
 Use when the application already proxies requests through its own server. Read the scenario signal only in explicitly allowed modes, branch before the normal response, and preserve the response contract.

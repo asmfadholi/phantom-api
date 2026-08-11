@@ -67,7 +67,7 @@ Apply these rules:
 - Search: show it when the filtered route has more than eight choices. Match labels, descriptions, keys, and preset IDs. Preserve selected items in results.
 - Groups: use checkboxes for independent states and radio controls for mutually exclusive states. Group by user intent such as Data, Access, Network, and Actions, not by implementation file.
 - Descriptions: keep labels short and add one concise helper line only when the effect is not obvious. Never use placeholder text as a label.
-- Pending versus applied: stage changes locally when applying requires a reload or refetch. Make the difference visible with text and count, not color alone.
+- Pending versus applied: stage changes locally when applying requires a refetch, invalidation, or soft framework refresh. Make the difference visible with text and count, not color alone.
 - Actions: keep `Apply` as the single primary action. Use `Clear` or `Reset` as a secondary action. Disable Apply when there is no change and during submission.
 - Feedback: announce success or failure in an `aria-live="polite"` region without stealing focus. State the recovery action for failures.
 - Empty route: show `No scenarios for this screen` and preserve access to Clear when global state is active.
@@ -95,6 +95,7 @@ Do not render every scenario as a card. Use compact grouped rows with sparse sep
 - Keep labels clickable with their checkbox or radio. Maintain at least 8px between adjacent interactive targets.
 - Provide pressed feedback within 100ms. Use a subtle `scale(0.97-0.98)` or project-standard state layer without shifting layout.
 - When Apply triggers async work, show progress, prevent duplicate submission, retain user choices on failure, and announce the outcome.
+- After Apply succeeds, update the current screen in place through reactive state, targeted refetch/invalidation, or framework soft refresh. Preserve scroll and unrelated form state. A hard page reload is an explicitly documented fallback, not the default.
 
 ## Motion
 
@@ -125,5 +126,6 @@ Motion communicates the relationship between trigger and popover; it is not deco
 - [ ] Click, tap, Enter, Space, Tab, Shift+Tab, Escape, and outside click were verified.
 - [ ] Presets, search threshold, grouped choices, pending state, Apply, and Clear follow this hierarchy.
 - [ ] Normal, loading, empty, error, disabled, pending, and applied UI states are implemented.
+- [ ] Apply updates the affected screen without a hard reload when the framework provides a safe live-update path.
 - [ ] Light and dark theme contrast, reduced motion, and screen-reader announcements were checked.
 - [ ] Simulator UI and adapters share explicit production gating.
